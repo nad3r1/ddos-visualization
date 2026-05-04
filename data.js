@@ -556,7 +556,7 @@ const DDoS_DATA = {
     },
     {
       label: 'Radware, "What is a TCP SYN Flood Attack?"',
-      url: "https://www.radware.com/security/ddos-knowledge-center/ddospedia/tcp-syn-flood/"
+      url: "https://www.radware.com/security/ddos-knowledge-center/ddospedia/tcp-flood/"
     },
     {
       label: 'Cloudflare, "DDoS Mitigation Strategies"',
