@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DDoS Visualization Project | Simulator</title>
+  <style>
+    html,
+    body {
+      background: #07101a;
+      color-scheme: dark;
+    }
+  </style>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body class="simulator-page">
+  <div class="page-shell">
+    <nav class="site-nav card" aria-label="Primary navigation">
+      <a class="nav-link" href="index.html">Home</a>
+      <a class="nav-link active" href="simulator.html">Simulator</a>
+      <a class="nav-link" href="attacks.html">Attacks</a>
+      <a class="nav-link" href="mitigations.html">Mitigations</a>
+      <a class="nav-link" href="tcpip.html">TCP/IP Model</a>
+      <a class="nav-link" href="walkthroughs.html">Walkthroughs</a>
+      <a class="nav-link" href="glossary.html">Glossary/References</a>
+    </nav>
+
+    <header class="page-hero card">
+      <p class="eyebrow">Interactive Overview</p>
+      <h1>DDoS Simulator</h1>
+      <p class="hero-text">
+        Use this page to compare attack and mitigation combinations, then connect the results back to the written guides.
+      </p>
+    </header>
+
+    <main class="content-stack">
+      <section class="card scenario-strip">
+        <p class="scenario-strip-text">
+          <strong>New here?</strong> Try:
+          <a href="simulator.html?attack=syn&mitigation=none&compare=syncookies">SYN Flood vs SYN Cookies</a>
+          <span>|</span>
+          <a href="simulator.html?attack=http&mitigation=syncookies&compare=cdn">HTTP Flood vs CDN</a>
+          <span>|</span>
+          <a href="simulator.html?attack=dns&mitigation=none&compare=cdn">DNS Amplification vs CDN</a>
+        </p>
+      </section>
+
+      <section class="card simulator-panel" id="simulator">
+        <div class="simulator-intro">
+          <div class="simulator-copy compact">
+            <h2>How To Use The Simulator</h2>
+            <p>
+              Choose an attack, choose a mitigation, and run the scenario to see how the defense changes availability and service pressure.
+              For the clearest lesson, compare a weak mitigation with a better-aligned mitigation against the same attack.
+            </p>
+          </div>
+        </div>
+
+        <div class="dashboard">
+          <section class="card control-panel" aria-labelledby="scenarioBuilderHeading">
+            <div class="section-heading">
+              <div>
+                <p class="section-kicker">Controls</p>
+                <h2 id="scenarioBuilderHeading">Scenario Builder</h2>
+              </div>
+            </div>
+
+            <div class="field-grid">
+              <div class="field">
+                <label for="attackSelect">Attack Type</label>
+                <select id="attackSelect" aria-describedby="attackHelp"></select>
+                <p id="attackHelp" class="field-help">Choose the DDoS attack you want to study.</p>
+              </div>
+
+              <div class="field">
+                <label for="mitigationSelect">Primary Mitigation</label>
+                <select id="mitigationSelect" aria-describedby="mitigationHelp"></select>
+                <p id="mitigationHelp" class="field-help">This mitigation drives the main result.</p>
+              </div>
+
+              <div class="field">
+                <label for="compareMitigationSelect">Comparison Mitigation</label>
+                <select id="compareMitigationSelect"></select>
+                <p class="field-help">Used when you choose comparison mode.</p>
+              </div>
+
+              <div class="field">
+                <label for="presetSelect">Preset Scenario</label>
+                <select id="presetSelect"></select>
+                <p class="field-help">Quick-load a guided example.</p>
+              </div>
+            </div>
+
+            <div class="button-row primary-actions">
+              <button id="runBtn" class="btn primary" type="button">Run Simulation</button>
+              <button id="compareBtn" class="btn secondary" type="button">Compare Mitigations</button>
+            </div>
+
+            <div class="button-row secondary-actions">
+              <button id="detailsBtn" class="btn ghost small-action" type="button">Refresh Details</button>
+              <button id="randomBtn" class="btn secondary" type="button">Random Scenario</button>
+              <button id="resetBtn" class="btn ghost" type="button">Reset</button>
+            </div>
+
+            <div class="selection-strip" aria-live="polite">
+              <article class="selection-pill">
+                <span class="pill-label">Attack</span>
+                <strong id="currentAttack">-</strong>
+              </article>
+              <article class="selection-pill">
+                <span class="pill-label">Primary Defense</span>
+                <strong id="currentMitigation">-</strong>
+              </article>
+              <article class="selection-pill">
+                <span class="pill-label">Compare With</span>
+                <strong id="currentCompareMitigation">-</strong>
+              </article>
+            </div>
+
+            <div class="recommendation-box recommendation-box-compact">
+              <div class="recommendation-header">
+                <div>
+                  <p class="section-kicker">Recommended First Step</p>
+                  <h3 id="recommendationTitle">Recommended Mitigation</h3>
+                </div>
+                <div class="heading-actions">
+                  <span id="recommendationFit" class="mini-badge">Awaiting selection</span>
+                  <button id="applyRecommendedBtn" class="btn secondary small-action" type="button">Use Recommended</button>
+                </div>
+              </div>
+              <p id="recommendationText">
+                Select an attack to see the most appropriate first-line mitigation and why it fits.
+              </p>
+            </div>
+          </section>
+
+          <section class="card metrics-panel">
+            <div class="section-heading">
+              <div>
+                <p class="section-kicker">Output</p>
+                <h2>Simulation Metrics</h2>
+              </div>
+            </div>
+
+            <div class="status-band">
+              <article class="status-card">
+                <span class="status-label">Scenario Risk</span>
+                <strong id="riskBadge" class="risk-badge neutral">Not Simulated</strong>
+                <p id="riskSummary" class="muted">Run a scenario to evaluate service health and residual risk.</p>
+              </article>
+              <article class="status-card">
+                <span class="status-label">Learning Focus</span>
+                <strong id="heroFocus">Availability, protocol behavior, and defense fit</strong>
+                <p class="muted">Read the metrics together instead of treating one number as the full story.</p>
+              </article>
+            </div>
+
+            <div class="section-heading compact-heading">
+              <div>
+                <h3>Current Scenario</h3>
+              </div>
+              <span id="scenarioBadge" class="scenario-badge">Awaiting scenario run</span>
+            </div>
+
+            <div class="metrics-grid">
+              <article class="metric-card">
+                <div class="metric-header">
+                  <span>Server Load</span>
+                  <strong id="serverLoadText">0%</strong>
+                </div>
+                <div class="bar"><div id="serverLoadBar" class="fill danger"></div></div>
+                <p class="metric-note">Approximate pressure on the target host or service tier.</p>
+              </article>
+
+              <article class="metric-card">
+                <div class="metric-header">
+                  <span>Legitimate Traffic Served</span>
+                  <strong id="trafficServedText">0%</strong>
+                </div>
+                <div class="bar"><div id="trafficServedBar" class="fill success"></div></div>
+                <p class="metric-note">Higher means more real users can still complete requests.</p>
+              </article>
+
+              <article class="metric-card">
+                <div class="metric-header">
+                  <span>Attack Pressure Reduced</span>
+                  <strong id="attackBlockedText">0%</strong>
+                </div>
+                <div class="bar"><div id="attackBlockedBar" class="fill info"></div></div>
+                <p class="metric-note">This metric represents hostile pressure reduced by the defense. Some controls block traffic directly, while others reduce impact by absorbing, distributing, or limiting load.</p>
+              </article>
+
+              <article class="metric-card">
+                <div class="metric-header">
+                  <span>Service Availability</span>
+                  <strong id="availabilityText">0%</strong>
+                </div>
+                <div class="bar"><div id="availabilityBar" class="fill accent"></div></div>
+                <p class="metric-note">Higher means the service remains useful to legitimate users.</p>
+              </article>
+            </div>
+
+            <p class="metric-compact-note">
+              Metrics are simplified educational estimates. <strong>Attack Pressure Reduced</strong> represents hostile pressure reduced by the defense. Some controls block traffic directly, while others reduce impact by absorbing, distributing, or limiting load.
+            </p>
+          </section>
+
+          <section class="card model-panel">
+            <div class="section-heading">
+              <div>
+                <p class="section-kicker">Model Context</p>
+                <h2>Attack Summary and Layer Impact</h2>
+              </div>
+            </div>
+
+            <div class="summary-grid">
+              <article class="summary-card">
+                <span class="summary-label">Category</span>
+                <strong id="categoryDisplay">-</strong>
+              </article>
+              <article class="summary-card">
+                <span class="summary-label">Targeted Layer</span>
+                <strong id="layerDisplay">-</strong>
+              </article>
+              <article class="summary-card">
+                <span class="summary-label">Main Protocol</span>
+                <strong id="protocolDisplay">-</strong>
+              </article>
+              <article class="summary-card">
+                <span class="summary-label">Severity</span>
+                <strong id="severityDisplay">-</strong>
+              </article>
+            </div>
+
+            <div class="stack-panel">
+              <div class="stack-panel-header">
+                <h3>TCP/IP Layer Impact</h3>
+                <p class="muted">Highlighted layers reflect the currently simulated attack path across the TCP/IP model.</p>
+              </div>
+              <div id="layerMap" class="layer-map" aria-label="TCP/IP layer impact visualization">
+                <article class="layer-card" data-layer="Application">
+                  <span class="layer-name">Application</span>
+                  <p>HTTP and DNS service behavior</p>
+                </article>
+                <article class="layer-card" data-layer="Transport">
+                  <span class="layer-name">Transport</span>
+                  <p>TCP and UDP delivery behavior</p>
+                </article>
+                <article class="layer-card" data-layer="Internet">
+                  <span class="layer-name">Internet</span>
+                  <p>IP routing, spoofing, and path effects</p>
+                </article>
+                <article class="layer-card" data-layer="Network Access">
+                  <span class="layer-name">Network Access</span>
+                  <p>Local delivery and congestion side effects</p>
+                </article>
+              </div>
+            </div>
+          </section>
+
+          <section class="card education-panel">
+            <div class="section-heading">
+              <div>
+                <p class="section-kicker">Explanation</p>
+                <h2>Simulation Interpretation</h2>
+              </div>
+            </div>
+
+            <div class="analysis-grid">
+              <article class="info-panel">
+                <h3>Attack Overview and Protocol Behavior</h3>
+                <p id="attackOverview">Choose an attack or load a preset to populate the teaching panels.</p>
+                <p id="protocolBehavior">-</p>
+              </article>
+              <article class="info-panel">
+                <h3>Layer Impact</h3>
+                <p id="layerImpact">-</p>
+              </article>
+              <article class="info-panel">
+                <h3>Mitigation Analysis</h3>
+                <p id="mitigationAnalysis">Run a simulation to evaluate how the selected mitigation behaves against the chosen attack.</p>
+              </article>
+              <article class="info-panel">
+                <h3>Result Interpretation and Key Takeaways</h3>
+                <p id="interpretation">-</p>
+                <ul id="takeawaysList" class="takeaway-list">
+                  <li>Simulations will summarize the major lesson here.</li>
+                </ul>
+              </article>
+            </div>
+          </section>
+
+          <section class="card comparison-panel">
+            <div class="section-heading">
+              <div>
+                <p class="section-kicker">Comparison</p>
+                <h2>Mitigation Comparison</h2>
+              </div>
+              <span class="muted">Same attack, two defenses</span>
+            </div>
+
+            <div id="comparisonState" class="empty-state">
+              Run a comparison to see how two mitigation strategies perform against the same attack.
+            </div>
+
+            <div id="comparisonGrid" class="comparison-grid" hidden>
+              <article class="compare-card">
+                <div class="compare-card-header">
+                  <div>
+                    <h3 id="comparePrimaryTitle">Primary</h3>
+                    <p id="comparePrimaryRisk" class="compare-risk">Risk: -</p>
+                  </div>
+                  <span id="comparePrimaryFit" class="mini-badge">-</span>
+                </div>
+                <dl id="comparePrimaryMetrics" class="compare-list"></dl>
+                <p id="comparePrimaryNote">-</p>
+              </article>
+
+              <article class="compare-card">
+                <div class="compare-card-header">
+                  <div>
+                    <h3 id="compareSecondaryTitle">Comparison</h3>
+                    <p id="compareSecondaryRisk" class="compare-risk">Risk: -</p>
+                  </div>
+                  <span id="compareSecondaryFit" class="mini-badge">-</span>
+                </div>
+                <dl id="compareSecondaryMetrics" class="compare-list"></dl>
+                <p id="compareSecondaryNote">-</p>
+              </article>
+            </div>
+
+            <div id="comparisonVerdict" class="comparison-verdict">No comparison verdict yet.</div>
+          </section>
+
+          <section class="card timeline-panel">
+            <div class="section-heading">
+              <div>
+                <p class="section-kicker">Event Log</p>
+                <h2>Simulation Timeline</h2>
+              </div>
+            </div>
+            <ol id="timeline" class="timeline-list">
+              <li>Select an attack and mitigation strategy to begin exploring the model.</li>
+            </ol>
+          </section>
+        </div>
+      </section>
+
+      <section class="card history-panel">
+        <div class="section-heading">
+          <div>
+            <p class="section-kicker">Saved Runs</p>
+            <h2>Saved Results and Scenario History</h2>
+          </div>
+        </div>
+        <details class="history-disclosure">
+          <summary>Open saved results tools</summary>
+          <div class="history-disclosure-body">
+            <div class="history-toolbar">
+              <button id="saveBtn" class="btn secondary small-action" type="button">Save Result</button>
+            </div>
+            <div id="historyEmpty" class="empty-state">
+              No saved scenarios yet. Run a simulation and save it to build a comparison history.
+            </div>
+            <div id="historyList" class="history-list"></div>
+          </div>
+        </details>
+      </section>
+
+      <section class="card overview-panel">
+        <div class="section-heading">
+          <div>
+            <p class="section-kicker">Important Context</p>
+            <h2>Simulator Limitations</h2>
+          </div>
+        </div>
+        <div class="prose-grid">
+          <article class="info-panel">
+            <h3>Educational Model</h3>
+            <p>
+              The simulator does not use live packet captures, SIEM alerts, flow telemetry, or real monitoring data.
+              All values are simplified educational estimates designed to show relative differences between attack and mitigation pairs.
+            </p>
+          </article>
+          <article class="info-panel">
+            <h3>One Primary Control At A Time</h3>
+            <p>
+              Each run models one primary mitigation so the relationship between attack mechanism and defense fit
+              stays easy to explain. Real DDoS defense is usually layered across host, application, edge, and upstream infrastructure.
+            </p>
+          </article>
+          <article class="info-panel">
+            <h3>Real Incidents Are Broader</h3>
+            <p>
+              In real incidents, upstream provider support, network topology, available bandwidth, service capacity,
+              and application design all influence the outcome. This simulator isolates the core teaching concepts rather than reproducing full production complexity.
+            </p>
+          </article>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="data.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DDoS Visualization Project | Attack Guides</title>
+  <style>
+    html,
+    body {
+      background: #07101a;
+      color-scheme: dark;
+    }
+  </style>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="page-shell">
+    <nav class="site-nav card" aria-label="Primary navigation">
+      <a class="nav-link" href="index.html">Home</a>
+      <a class="nav-link" href="simulator.html">Simulator</a>
+      <a class="nav-link active" href="attacks.html">Attacks</a>
+      <a class="nav-link" href="mitigations.html">Mitigations</a>
+      <a class="nav-link" href="tcpip.html">TCP/IP Model</a>
+      <a class="nav-link" href="walkthroughs.html">Walkthroughs</a>
+      <a class="nav-link" href="glossary.html">Glossary/References</a>
+    </nav>
+
+    <header class="page-hero card">
+      <p class="eyebrow">Attack Guides</p>
+      <h1>DDoS Attack Explanations</h1>
+      <p class="hero-text">
+        This page gives a dedicated written explanation for each attack so the simulator results are easier to defend and discuss.
+      </p>
+    </header>
+
+    <main class="content-stack">
+      <section class="card guide-panel">
+        <div class="section-heading">
+          <div>
+            <p class="section-kicker">Written Content</p>
+            <h2>Attack Guide Library</h2>
+          </div>
+        </div>
+        <p class="section-intro">
+          Each guide explains the attack in plain language, links it to the TCP/IP model, and highlights why certain mitigations fit better than others.
+        </p>
+        <div id="attackGuidesGrid" class="guide-grid"></div>
+      </section>
+    </main>
+  </div>
+
+  <script src="data.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

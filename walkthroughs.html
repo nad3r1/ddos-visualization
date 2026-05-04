@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DDoS Visualization Project | Walkthroughs</title>
+  <style>
+    html,
+    body {
+      background: #07101a;
+      color-scheme: dark;
+    }
+  </style>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body class="walkthrough-page">
+  <div class="page-shell">
+    <nav class="site-nav card" aria-label="Primary navigation">
+      <a class="nav-link" href="index.html">Home</a>
+      <a class="nav-link" href="simulator.html">Simulator</a>
+      <a class="nav-link" href="attacks.html">Attacks</a>
+      <a class="nav-link" href="mitigations.html">Mitigations</a>
+      <a class="nav-link" href="tcpip.html">TCP/IP Model</a>
+      <a class="nav-link active" href="walkthroughs.html">Walkthroughs</a>
+      <a class="nav-link" href="glossary.html">Glossary/References</a>
+    </nav>
+
+    <header class="page-hero card">
+      <p class="eyebrow">Guided Use</p>
+      <h1>Scenario Walkthroughs</h1>
+      <p class="hero-text">
+        These guided scenarios tell users what to select in the simulator, what should change, and why those changes matter.
+      </p>
+    </header>
+
+    <main class="content-stack">
+      <section class="card walkthrough-panel">
+        <div class="section-heading">
+          <div>
+            <p class="section-kicker">Guided Scenarios</p>
+            <h2>Recommended Demonstrations</h2>
+          </div>
+        </div>
+        <div id="walkthroughGrid" class="walkthrough-grid"></div>
+      </section>
+    </main>
+  </div>
+
+  <script src="data.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

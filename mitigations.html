@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DDoS Visualization Project | Mitigation Guides</title>
+  <style>
+    html,
+    body {
+      background: #07101a;
+      color-scheme: dark;
+    }
+  </style>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="page-shell">
+    <nav class="site-nav card" aria-label="Primary navigation">
+      <a class="nav-link" href="index.html">Home</a>
+      <a class="nav-link" href="simulator.html">Simulator</a>
+      <a class="nav-link" href="attacks.html">Attacks</a>
+      <a class="nav-link active" href="mitigations.html">Mitigations</a>
+      <a class="nav-link" href="tcpip.html">TCP/IP Model</a>
+      <a class="nav-link" href="walkthroughs.html">Walkthroughs</a>
+      <a class="nav-link" href="glossary.html">Glossary/References</a>
+    </nav>
+
+    <header class="page-hero card">
+      <p class="eyebrow">Mitigation Guides</p>
+      <h1>DDoS Defense Strategies</h1>
+      <p class="hero-text">
+        These guides explain what each mitigation does, what attacks it helps most, and why layered defense is necessary.
+      </p>
+    </header>
+
+    <main class="content-stack">
+      <section class="card guide-panel">
+        <div class="section-heading">
+          <div>
+            <p class="section-kicker">Written Content</p>
+            <h2>Mitigation Guide Library</h2>
+          </div>
+        </div>
+        <p class="section-intro">
+          No single mitigation solves every DDoS problem. This page is designed to make those tradeoffs explicit.
+        </p>
+        <div id="mitigationGuidesGrid" class="guide-grid"></div>
+      </section>
+    </main>
+  </div>
+
+  <script src="data.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

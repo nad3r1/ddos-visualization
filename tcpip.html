@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DDoS Visualization Project | TCP/IP Model</title>
+  <style>
+    html,
+    body {
+      background: #07101a;
+      color-scheme: dark;
+    }
+  </style>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body class="tcpip-page">
+  <div class="page-shell">
+    <nav class="site-nav card" aria-label="Primary navigation">
+      <a class="nav-link" href="index.html">Home</a>
+      <a class="nav-link" href="simulator.html">Simulator</a>
+      <a class="nav-link" href="attacks.html">Attacks</a>
+      <a class="nav-link" href="mitigations.html">Mitigations</a>
+      <a class="nav-link active" href="tcpip.html">TCP/IP Model</a>
+      <a class="nav-link" href="walkthroughs.html">Walkthroughs</a>
+      <a class="nav-link" href="glossary.html">Glossary/References</a>
+    </nav>
+
+    <header class="page-hero card">
+      <p class="eyebrow">Concept Map</p>
+      <h1>TCP/IP Model and DDoS Mapping</h1>
+      <p class="hero-text">
+        This page explains how the project uses the TCP/IP model to organize attacks, protocols, and security relevance.
+      </p>
+    </header>
+
+    <main class="content-stack">
+      <section class="card overview-panel">
+        <div class="section-heading">
+          <div>
+            <p class="section-kicker">Explanation</p>
+            <h2>How The Model Is Used In This Project</h2>
+          </div>
+        </div>
+        <div class="prose-grid">
+          <article class="info-panel">
+            <h3>Application Layer</h3>
+            <p>
+              This layer includes application protocols such as HTTP and DNS. In this project, HTTP Flood and DNS Amplification
+              both depend on application-level protocol behavior, even though their damage can spread into lower layers.
+            </p>
+          </article>
+          <article class="info-panel">
+            <h3>Transport Layer</h3>
+            <p>
+              This layer includes TCP and UDP. SYN Flood attacks TCP connection setup, while UDP Flood attacks packet delivery
+              capacity without needing a connection handshake.
+            </p>
+          </article>
+          <article class="info-panel">
+            <h3>Internet and Network Access Effects</h3>
+            <p>
+              Some attacks begin with one protocol but create wider path-level effects. DNS Amplification especially shows how
+              source spoofing and reflected traffic can overwhelm upstream routing paths and access links.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <section class="card tcpip-panel">
+        <div class="section-heading">
+          <div>
+            <p class="section-kicker">Layer Map</p>
+            <h2>Layer, Protocol, and Security Relevance</h2>
+          </div>
+        </div>
+        <p class="section-intro">
+          A DDoS attack may technically target one layer while creating practical effects across several layers. That is why the model is useful as a teaching structure rather than as a rigid boundary.
+        </p>
+        <div id="tcpipGrid" class="tcpip-grid"></div>
+      </section>
+
+      <section class="card overview-panel">
+        <div class="section-heading">
+          <div>
+            <p class="section-kicker">Interpretation</p>
+            <h2>Layer vs. Impact</h2>
+          </div>
+        </div>
+        <div class="prose-grid">
+          <article class="info-panel">
+            <h3>DNS Amplification Across Layers</h3>
+            <p>
+              DNS Amplification is a useful example because its behavior begins at the Application layer with DNS
+              queries and responses, travels over UDP at the Transport layer, depends on spoofed source IP
+              addresses at the Internet layer, and can ultimately congest routing paths and access links when the
+              reflected response volume becomes large enough.
+            </p>
+          </article>
+          <article class="info-panel">
+            <h3>SYN Flood As A Contrast</h3>
+            <p>
+              SYN Flood is a simpler contrast because it directly abuses TCP connection setup at the Transport
+              layer. Even so, the effect is still experienced by applications and users because sessions cannot be
+              established reliably once connection state is exhausted.
+            </p>
+          </article>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="data.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

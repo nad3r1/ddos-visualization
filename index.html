@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DDoS Visualization Project | Home</title>
+  <style>
+    html,
+    body {
+      background: #07101a;
+      color-scheme: dark;
+    }
+  </style>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="page-shell">
+    <nav class="site-nav card" aria-label="Primary navigation">
+      <a class="nav-link active" href="index.html">Home</a>
+      <a class="nav-link" href="simulator.html">Simulator</a>
+      <a class="nav-link" href="attacks.html">Attacks</a>
+      <a class="nav-link" href="mitigations.html">Mitigations</a>
+      <a class="nav-link" href="tcpip.html">TCP/IP Model</a>
+      <a class="nav-link" href="walkthroughs.html">Walkthroughs</a>
+      <a class="nav-link" href="glossary.html">Glossary/References</a>
+    </nav>
+
+    <header class="hero card">
+      <div class="hero-copy">
+        <p class="eyebrow">CPRE 530 Final Project</p>
+        <h1>Interactive Visualization of DDoS Attacks Across the TCP/IP Model</h1>
+        <p class="hero-text">
+          This project is a multi-page educational website and simulator that explains how common DDoS attacks
+          reduce service availability, how those attacks relate to the TCP/IP model, and why different mitigations
+          are stronger in different scenarios.
+        </p>
+        <div class="cta-row">
+          <a class="btn-link primary" href="simulator.html">Launch Simulator</a>
+          <a class="btn-link secondary" href="attacks.html">View Attack Guides</a>
+          <a class="btn-link secondary" href="mitigations.html">View Mitigation Guides</a>
+        </div>
+      </div>
+
+      <div class="hero-status">
+        <article class="status-card">
+          <span class="status-label">Core Focus</span>
+          <strong>Availability Under Attack</strong>
+          <p class="muted">
+            DDoS attacks are especially important in network security because they target whether legitimate users
+            can still reach a service when it is under stress.
+          </p>
+        </article>
+
+        <article class="status-card">
+          <span class="status-label">Teaching Approach</span>
+          <strong>Simulator + Written Guides</strong>
+          <p class="muted">
+            The simulator gives a fast overview, while the attack and mitigation pages provide deeper written explanation.
+          </p>
+        </article>
+      </div>
+    </header>
+
+    <main class="content-stack">
+      <section class="card overview-panel">
+        <div class="section-heading">
+          <div>
+            <p class="section-kicker">Project Overview</p>
+            <h2>Why This Topic Matters</h2>
+          </div>
+        </div>
+
+        <div class="prose-grid">
+          <article class="info-panel">
+            <h3>What DDoS Attacks Are</h3>
+            <p>
+              A Distributed Denial-of-Service attack uses many traffic sources to overwhelm a target with
+              connection attempts, packets, or application requests. The goal is not usually to read or alter
+              stored data directly, but to make the service slow, unreliable, or unreachable.
+            </p>
+          </article>
+
+          <article class="info-panel">
+            <h3>Why Availability Is The Main Security Property</h3>
+            <p>
+              In this project, the key security property under attack is availability. A service can keep its
+              data confidential and unmodified, but still fail its users if they cannot connect or receive
+              useful responses in time.
+            </p>
+          </article>
+
+          <article class="info-panel">
+            <h3>Why The TCP/IP Model Matters</h3>
+            <p>
+              DDoS attacks do not all behave at the same layer. Some target TCP connection setup at the Transport
+              layer, some target application requests at the Application layer, and some create congestion that
+              spreads across Internet and access paths. Mapping attacks to the TCP/IP model helps explain why
+              defensive strategies must be chosen carefully.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <section class="card quickstart-panel">
+        <div class="section-heading">
+          <div>
+            <p class="section-kicker">How To Use This Site</p>
+            <h2>Suggested Learning Path</h2>
+          </div>
+        </div>
+
+        <div class="walkthrough-grid">
+          <article class="walkthrough-card">
+            <h3>1. Start With The Simulator</h3>
+            <p>
+              Open the simulator and compare one attack against multiple mitigations. This gives a fast visual
+              sense of how different defensive controls change server load, attack pressure reduced, and service availability.
+            </p>
+          </article>
+
+          <article class="walkthrough-card">
+            <h3>2. Read The Attack Guides</h3>
+            <p>
+              Use the dedicated attack pages to understand the protocol behavior, step-by-step attack process,
+              and the specific bottleneck each attack exploits.
+            </p>
+          </article>
+
+          <article class="walkthrough-card">
+            <h3>3. Read The Mitigation Guides</h3>
+            <p>
+              Review the mitigation pages to see why no single defense solves every DDoS problem and why layered
+              security is a recurring theme in network defense.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <section class="card overview-panel">
+        <div class="section-heading">
+          <div>
+            <p class="section-kicker">Learning Goals</p>
+            <h2>Learning Objectives</h2>
+          </div>
+        </div>
+
+        <div class="walkthrough-grid">
+          <article class="walkthrough-card">
+            <h3>Availability Under Stress</h3>
+            <p>
+              Explain how DDoS attacks reduce service availability by exhausting connection state, server capacity,
+              bandwidth, or request-processing resources before legitimate users can be served reliably.
+            </p>
+          </article>
+
+          <article class="walkthrough-card">
+            <h3>Layer Identification</h3>
+            <p>
+              Identify which TCP/IP layers are most directly involved in SYN Flood, HTTP Flood, UDP Flood, and
+              DNS Amplification, while also recognizing that practical service impact can cross layer boundaries.
+            </p>
+          </article>
+
+          <article class="walkthrough-card">
+            <h3>Defense Fit</h3>
+            <p>
+              Describe why different DDoS mitigations work better for different attack types and why network
+              security teams usually combine several controls rather than relying on a single defense.
+            </p>
+          </article>
+
+          <article class="walkthrough-card">
+            <h3>Metric Interpretation</h3>
+            <p>
+              Interpret simplified simulator metrics such as server load, legitimate traffic served, attack
+              pressure reduced, and service availability as relative teaching indicators rather than as real monitoring data.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <section class="card overview-panel">
+        <div class="section-heading">
+          <div>
+            <p class="section-kicker">Academic Framing</p>
+            <h2>Research Basis</h2>
+          </div>
+        </div>
+
+        <div class="prose-grid">
+          <article class="info-panel">
+            <h3>Attack Behavior</h3>
+            <p>
+              The project content is based on research into general DDoS behavior, TCP three-way handshake abuse
+              in SYN floods, HTTP application-layer request flooding, UDP volumetric flooding, and DNS
+              reflection/amplification. These attack families were selected because they demonstrate different
+              pressure points across the TCP/IP model.
+            </p>
+          </article>
+
+          <article class="info-panel">
+            <h3>Mitigation Strategy</h3>
+            <p>
+              The mitigation guidance is grounded in commonly discussed defensive approaches such as rate limiting,
+              SYN cookies, traffic filtering, load balancing, and CDN or Anycast absorption. The website uses
+              these controls to show that mitigation quality depends on mechanism fit, not just on whether a tool sounds generally useful.
+            </p>
+          </article>
+
+          <article class="info-panel">
+            <h3>Performance Concepts</h3>
+            <p>
+              The simulator also draws on basic network performance ideas such as server load, traffic volume,
+              reduced hostile pressure, and availability. The numbers shown in the simulator are deliberately
+              simplified so the cause-and-effect relationship stays understandable in a classroom discussion.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <section class="card overview-panel">
+        <div class="section-heading">
+          <div>
+            <p class="section-kicker">Operational Context</p>
+            <h2>Real-World Relevance</h2>
+          </div>
+        </div>
+
+        <div class="prose-grid">
+          <article class="info-panel">
+            <h3>What DDoS Can Disrupt</h3>
+            <p>
+              DDoS attacks can affect public websites, APIs, DNS providers, gaming platforms, cloud services,
+              and campus systems such as learning portals, authentication services, or university-facing web applications.
+            </p>
+          </article>
+
+          <article class="info-panel">
+            <h3>Why Security Teams Care</h3>
+            <p>
+              Security and network operations teams care about DDoS resilience because availability failures can
+              interrupt learning, commerce, communication, and trust. Even when no data is stolen, a service that
+              cannot be reached still fails its mission.
+            </p>
+          </article>
+        </div>
+      </section>
+    </main>
+  </div>
+</body>
+</html>
